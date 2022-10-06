@@ -9,13 +9,49 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Spatial",
-"class": "CameraRoot",
+"base": "Resource",
+"class": "InputAction",
 "language": "GDScript",
-"path": "res://ignore/camera_root.gd"
+"path": "res://addons/groak_games_addons/input_manager/inputs/input_action.gd"
+}, {
+"base": "InputAction",
+"class": "InputActionScalar",
+"language": "GDScript",
+"path": "res://addons/groak_games_addons/input_manager/inputs/input_action_scalar.gd"
+}, {
+"base": "InputAction",
+"class": "InputActionVector",
+"language": "GDScript",
+"path": "res://addons/groak_games_addons/input_manager/inputs/input_action_vector.gd"
+}, {
+"base": "Resource",
+"class": "InputProfile",
+"language": "GDScript",
+"path": "res://addons/groak_games_addons/input_manager/input_profile.gd"
+}, {
+"base": "Reference",
+"class": "JsonInputProfileUtil",
+"language": "GDScript",
+"path": "res://addons/groak_games_addons/input_manager_json_input_profiles/json_input_profile_util.gd"
+}, {
+"base": "ResourceFormatLoader",
+"class": "ResourceFormatLoaderJSONInputProfile",
+"language": "GDScript",
+"path": "res://addons/groak_games_addons/input_manager_json_input_profiles/resouce_format_loader_json_input_profile.gd"
+}, {
+"base": "ResourceFormatSaver",
+"class": "ResourceFormatSaverJSONInputProfile",
+"language": "GDScript",
+"path": "res://addons/groak_games_addons/input_manager_json_input_profiles/resouce_format_saver_json_input_profile.gd"
 } ]
 _global_script_class_icons={
-"CameraRoot": ""
+"InputAction": "",
+"InputActionScalar": "",
+"InputActionVector": "",
+"InputProfile": "",
+"JsonInputProfileUtil": "",
+"ResourceFormatLoaderJSONInputProfile": "",
+"ResourceFormatSaverJSONInputProfile": ""
 }
 
 [application]
