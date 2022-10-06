@@ -1,0 +1,4 @@
+[submodule "addons/groak_games_addons"]
+	path = addons/groak_games_addons
+	url = https://github.com/groakthefrog/groak_games_addons.git
+	branch = 3.x
