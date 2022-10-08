@@ -14,5 +14,6 @@ player_instance_scene = ExtResource( 1 )
 anchor_left = 0.75
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 margin_right = 40.0
 margin_bottom = 40.0

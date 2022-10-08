@@ -7,13 +7,14 @@ export(NodePath) onready var player_id_line_edit = get_node(player_id_line_edit)
 
 export(NodePath) onready var profile_path_line_edit = get_node(profile_path_line_edit) as LineEdit
 
-export(NodePath) onready var add_player_button = get_node(add_player_button) as Button
-
 export(NodePath) onready var devices_menu = get_node(devices_menu)
+
+export(NodePath) onready var add_player_button = get_node(add_player_button) as Button
 
 var _add_player_error_coroutine_timer: SceneTreeTimer
 
 func _ready()->void:
+	add_player_button.connect("pressed", self, "_on_add_player_pressed")
 	add_player_button.set_meta("__base_text", add_player_button.text)
 
 
