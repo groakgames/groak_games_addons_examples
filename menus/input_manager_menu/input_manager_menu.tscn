@@ -1,0 +1,105 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://menus/input_manager_menu/input_manager_menu.gd" type="Script" id=1]
+[ext_resource path="res://menus/input_manager_menu/profile_selector.gd" type="Script" id=2]
+[ext_resource path="res://menus/input_manager_menu/device_menu_button.gd" type="Script" id=3]
+[ext_resource path="res://assets/folder_texture.res" type="Texture" id=4]
+
+[node name="InputManagerMenu" type="ScrollContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+player_id_line_edit = NodePath("VBox/PlayerIDLineEdit")
+profile_path_line_edit = NodePath("VBox/ProfilePathHBox/ProfileFilePathLineEdit")
+add_player_button = NodePath("VBox/AddPlayerButton")
+devices_menu = NodePath("VBox/DevicesMenuButton")
+
+[node name="VBox" type="VBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="PlayerHeading" type="Label" parent="VBox"]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Player"
+align = 1
+
+[node name="NameIDHeading" type="Label" parent="VBox"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 32.0
+text = "Name / ID"
+
+[node name="PlayerIDLineEdit" type="LineEdit" parent="VBox"]
+margin_top = 36.0
+margin_right = 1024.0
+margin_bottom = 60.0
+
+[node name="ProfileHeading" type="Label" parent="VBox"]
+margin_top = 64.0
+margin_right = 1024.0
+margin_bottom = 78.0
+text = "Profile"
+
+[node name="ProfilePathHBox" type="HBoxContainer" parent="VBox"]
+margin_top = 82.0
+margin_right = 1024.0
+margin_bottom = 106.0
+script = ExtResource( 2 )
+load_file_dialog = NodePath("LoadFileDialogButton/LoadProfileFileDialog")
+file_path_line_edit = NodePath("ProfileFilePathLineEdit")
+
+[node name="ProfileFilePathLineEdit" type="LineEdit" parent="VBox/ProfilePathHBox"]
+margin_right = 987.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="LoadFileDialogButton" type="Button" parent="VBox/ProfilePathHBox"]
+margin_left = 991.0
+margin_right = 1024.0
+margin_bottom = 24.0
+grow_vertical = 2
+icon = ExtResource( 4 )
+
+[node name="LoadProfileFileDialog" type="FileDialog" parent="VBox/ProfilePathHBox/LoadFileDialogButton"]
+anchor_left = 0.125
+anchor_top = 0.125
+anchor_right = 0.875
+anchor_bottom = 0.875
+rect_min_size = Vector2( 170, 59.5 )
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 1
+filters = PoolStringArray( "*.inputprofile", "*.json", "*.tres", "*.res" )
+
+[node name="DevicesMenuButton" type="MenuButton" parent="VBox"]
+margin_top = 110.0
+margin_right = 1024.0
+margin_bottom = 130.0
+text = "Claim Devices"
+flat = false
+script = ExtResource( 3 )
+
+[node name="AddPlayerButton" type="Button" parent="VBox"]
+margin_top = 134.0
+margin_right = 1024.0
+margin_bottom = 154.0
+text = "Add Player"
+
+[node name="HSeparator" type="HSeparator" parent="VBox"]
+margin_top = 158.0
+margin_right = 1024.0
+margin_bottom = 162.0
+
+[node name="Button2" type="Button" parent="VBox"]
+margin_top = 166.0
+margin_right = 1024.0
+margin_bottom = 186.0
+text = "Create / Edit profile"
+
+[connection signal="pressed" from="VBox/ProfilePathHBox/LoadFileDialogButton" to="VBox/ProfilePathHBox" method="_on_load_file_button_pressed"]
+[connection signal="file_selected" from="VBox/ProfilePathHBox/LoadFileDialogButton/LoadProfileFileDialog" to="VBox/ProfilePathHBox" method="_on_file_selected"]
+[connection signal="pressed" from="VBox/AddPlayerButton" to="." method="_on_add_player_pressed"]

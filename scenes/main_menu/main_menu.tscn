@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://scenes/main_menu/main_menu.gd" type="Script" id=1]
+[ext_resource path="res://scenes/2d/2d.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/3d/3d.tscn" type="PackedScene" id=3]
+
+[node name="Control" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+_2d_scene = ExtResource( 2 )
+_3d_scene = ExtResource( 3 )
+_2d_button_path = NodePath("HBoxContainer/2dSceneButton")
+_3d_button_path = NodePath("HBoxContainer/3dSceneButton")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 374.0
+margin_top = 290.0
+margin_right = 650.0
+margin_bottom = 310.0
+custom_constants/separation = 20
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="2dSceneButton" type="Button" parent="HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 20.0
+text = "2d Example Scene"
+
+[node name="3dSceneButton" type="Button" parent="HBoxContainer"]
+margin_left = 148.0
+margin_right = 276.0
+margin_bottom = 20.0
+text = "3d Example Scene"

@@ -57,7 +57,17 @@ _global_script_class_icons={
 [application]
 
 config/name="AddonsTesting"
+run/main_scene="res://scenes/main_menu/main_menu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+GGInput="*res://addons/groak_games_addons/input_manager/input.gd"
+PlayerManager="*res://player_manager.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/groak_games_addons/input_manager/plugin.cfg" )
 
 [gui]
 
