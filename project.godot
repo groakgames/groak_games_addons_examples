@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "MenuButton",
+"class": "DeviceSelectDropDown",
+"language": "GDScript",
+"path": "res://menus/input_manager_menu/device_menu_button.gd"
+}, {
 "base": "Resource",
 "class": "InputAction",
 "language": "GDScript",
@@ -45,6 +50,7 @@ _global_script_classes=[ {
 "path": "res://addons/groak_games_addons/input_manager_json_input_profiles/resouce_format_saver_json_input_profile.gd"
 } ]
 _global_script_class_icons={
+"DeviceSelectDropDown": "",
 "InputAction": "",
 "InputActionScalar": "",
 "InputActionVector": "",

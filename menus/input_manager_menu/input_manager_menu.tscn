@@ -1,69 +1,94 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://menus/input_manager_menu/input_manager_menu.gd" type="Script" id=1]
 [ext_resource path="res://menus/input_manager_menu/profile_selector.gd" type="Script" id=2]
-[ext_resource path="res://menus/input_manager_menu/device_menu_button.gd" type="Script" id=3]
 [ext_resource path="res://assets/folder_texture.res" type="Texture" id=4]
+[ext_resource path="res://menus/input_manager_menu/player_select_option_box.gd" type="Script" id=5]
+[ext_resource path="res://menus/input_manager_menu/device_select_drop_down.tscn" type="PackedScene" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="InputManagerMenu" type="ScrollContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-player_id_line_edit = NodePath("VBox/PlayerIDLineEdit")
-profile_path_line_edit = NodePath("VBox/ProfilePathHBox/ProfileFilePathLineEdit")
-add_player_button = NodePath("VBox/AddPlayerButton")
-devices_menu = NodePath("VBox/DevicesMenuButton")
+player_id_line_edit = NodePath("MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/PlayerIDLineEdit")
+profile_path_line_edit = NodePath("MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox/ProfileFilePathLineEdit")
+add_player_button = NodePath("MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/AddPlayerButton")
 
-[node name="VBox" type="VBoxContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
 
-[node name="PlayerHeading" type="Label" parent="VBox"]
-margin_right = 1024.0
+[node name="VBox" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 1019.0
+margin_bottom = 595.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 20
+
+[node name="CreatePlayerPanel" type="PanelContainer" parent="MarginContainer/VBox"]
+margin_right = 1014.0
+margin_bottom = 182.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBox/CreatePlayerPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1007.0
+margin_bottom = 175.0
+
+[node name="PlayerHeading" type="Label" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer"]
+margin_right = 1000.0
 margin_bottom = 14.0
-text = "Player"
+text = "Create Player"
 align = 1
 
-[node name="NameIDHeading" type="Label" parent="VBox"]
+[node name="NameIDHeading" type="Label" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer"]
 margin_top = 18.0
-margin_right = 1024.0
+margin_right = 1000.0
 margin_bottom = 32.0
 text = "Name / ID"
 
-[node name="PlayerIDLineEdit" type="LineEdit" parent="VBox"]
+[node name="PlayerIDLineEdit" type="LineEdit" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer"]
 margin_top = 36.0
-margin_right = 1024.0
+margin_right = 1000.0
 margin_bottom = 60.0
 
-[node name="ProfileHeading" type="Label" parent="VBox"]
+[node name="ProfileHeading" type="Label" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer"]
 margin_top = 64.0
-margin_right = 1024.0
+margin_right = 1000.0
 margin_bottom = 78.0
 text = "Profile"
 
-[node name="ProfilePathHBox" type="HBoxContainer" parent="VBox"]
+[node name="ProfilePathHBox" type="HBoxContainer" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer"]
 margin_top = 82.0
-margin_right = 1024.0
+margin_right = 1000.0
 margin_bottom = 106.0
 script = ExtResource( 2 )
 load_file_dialog = NodePath("LoadFileDialogButton/LoadProfileFileDialog")
 file_path_line_edit = NodePath("ProfileFilePathLineEdit")
 
-[node name="ProfileFilePathLineEdit" type="LineEdit" parent="VBox/ProfilePathHBox"]
-margin_right = 987.0
+[node name="ProfileFilePathLineEdit" type="LineEdit" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox"]
+margin_right = 963.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 
-[node name="LoadFileDialogButton" type="Button" parent="VBox/ProfilePathHBox"]
-margin_left = 991.0
-margin_right = 1024.0
+[node name="LoadFileDialogButton" type="Button" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox"]
+margin_left = 967.0
+margin_right = 1000.0
 margin_bottom = 24.0
 grow_vertical = 2
 icon = ExtResource( 4 )
 
-[node name="LoadProfileFileDialog" type="FileDialog" parent="VBox/ProfilePathHBox/LoadFileDialogButton"]
+[node name="LoadProfileFileDialog" type="FileDialog" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox/LoadFileDialogButton"]
 anchor_left = 0.125
 anchor_top = 0.125
 anchor_right = 0.875
@@ -75,31 +100,62 @@ mode = 0
 access = 1
 filters = PoolStringArray( "*.inputprofile", "*.json", "*.tres", "*.res" )
 
-[node name="DevicesMenuButton" type="MenuButton" parent="VBox"]
+[node name="DeviceSelectDropDown" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer" instance=ExtResource( 6 )]
 margin_top = 110.0
-margin_right = 1024.0
 margin_bottom = 130.0
-text = "Claim Devices"
-flat = false
-script = ExtResource( 3 )
 
-[node name="AddPlayerButton" type="Button" parent="VBox"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer"]
 margin_top = 134.0
-margin_right = 1024.0
-margin_bottom = 154.0
+margin_right = 1000.0
+margin_bottom = 144.0
+custom_constants/separation = 10
+custom_styles/separator = SubResource( 1 )
+
+[node name="AddPlayerButton" type="Button" parent="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer"]
+margin_top = 148.0
+margin_right = 1000.0
+margin_bottom = 168.0
 text = "Add Player"
 
-[node name="HSeparator" type="HSeparator" parent="VBox"]
-margin_top = 158.0
-margin_right = 1024.0
-margin_bottom = 162.0
+[node name="EditPlayerPanel" type="PanelContainer" parent="MarginContainer/VBox"]
+margin_top = 202.0
+margin_right = 1014.0
+margin_bottom = 316.0
 
-[node name="Button2" type="Button" parent="VBox"]
-margin_top = 166.0
-margin_right = 1024.0
-margin_bottom = 186.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBox/EditPlayerPanel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1007.0
+margin_bottom = 107.0
+
+[node name="EditPlayerHeading" type="Label" parent="MarginContainer/VBox/EditPlayerPanel/VBoxContainer"]
+margin_right = 1000.0
+margin_bottom = 14.0
+text = "Edit Player"
+align = 1
+
+[node name="PlayerSelectOptionBox" type="OptionButton" parent="MarginContainer/VBox/EditPlayerPanel/VBoxContainer"]
+margin_top = 18.0
+margin_right = 1000.0
+margin_bottom = 38.0
+script = ExtResource( 5 )
+
+[node name="DeviceSelectDropDown" parent="MarginContainer/VBox/EditPlayerPanel/VBoxContainer" instance=ExtResource( 6 )]
+
+[node name="HSeparator3" type="HSeparator" parent="MarginContainer/VBox/EditPlayerPanel/VBoxContainer"]
+margin_top = 66.0
+margin_right = 1000.0
+margin_bottom = 76.0
+custom_constants/separation = 10
+custom_styles/separator = SubResource( 1 )
+
+[node name="Button2" type="Button" parent="MarginContainer/VBox/EditPlayerPanel/VBoxContainer"]
+margin_top = 80.0
+margin_right = 1000.0
+margin_bottom = 100.0
 text = "Create / Edit profile"
 
-[connection signal="pressed" from="VBox/ProfilePathHBox/LoadFileDialogButton" to="VBox/ProfilePathHBox" method="_on_load_file_button_pressed"]
-[connection signal="file_selected" from="VBox/ProfilePathHBox/LoadFileDialogButton/LoadProfileFileDialog" to="VBox/ProfilePathHBox" method="_on_file_selected"]
-[connection signal="pressed" from="VBox/AddPlayerButton" to="." method="_on_add_player_pressed"]
+[connection signal="pressed" from="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox/LoadFileDialogButton" to="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox" method="_on_load_file_button_pressed"]
+[connection signal="file_selected" from="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox/LoadFileDialogButton/LoadProfileFileDialog" to="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/ProfilePathHBox" method="_on_file_selected"]
+[connection signal="pressed" from="MarginContainer/VBox/CreatePlayerPanel/VBoxContainer/AddPlayerButton" to="." method="_on_add_player_pressed"]
+[connection signal="item_selected" from="MarginContainer/VBox/EditPlayerPanel/VBoxContainer/PlayerSelectOptionBox" to="MarginContainer/VBox/EditPlayerPanel/VBoxContainer/PlayerSelectOptionBox" method="_on_item_selected"]

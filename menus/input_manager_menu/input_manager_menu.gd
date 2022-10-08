@@ -29,9 +29,9 @@ func _on_add_player_pressed()->void:
 
 	var profile: InputProfile
 	if not profile_path_line_edit.text.empty():
-		profile = ResourceLoader.load(profile_path_line_edit.text, "InputProfile")
+		profile = load(profile_path_line_edit.text) as InputProfile
 		if not profile:
-			_add_player_error_coroutine("Error: Invalid or Malformatted Input Profile!")
+			_add_player_error_coroutine("Error: Invalid or Malformed Input Profile!")
 			return
 
 	PlayerManager.add_player(player_id, profile, devices_menu.get_selected_device_ids())

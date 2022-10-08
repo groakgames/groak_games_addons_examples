@@ -11,7 +11,9 @@ signal player_removed(player_id)
 ## returns Error
 func add_player(player_id, profile:InputProfile, devices:PoolIntArray)->int:
 	if player_id in _players: return ERR_ALREADY_EXISTS
-
+	var data := PlayerData.new()
+	data.player_id = player_id
+	_players[player_id] = data
 	GGInput.create_player(player_id, profile, devices)
 	emit_signal("player_added", player_id)
 	return OK
@@ -28,6 +30,12 @@ func set_instance(player_id, instance:Node)->int:
 	var player_data: PlayerData = _players.get(player_id)
 	if not player_data: return ERR_DOES_NOT_EXIST
 	return OK
+
+func get_player_count()->int:
+	return _players.size()
+
+func get_player_ids()->Array:
+	return _players.keys()
 
 func get_player_data(player_id)->PlayerData:
 	return _players.get(player_id)

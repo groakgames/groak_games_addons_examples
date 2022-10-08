@@ -8,10 +8,10 @@ export var player_instance_scene: PackedScene
 var _player_instances: Dictionary = {}
 
 
-
 func _ready()->void:
 	PlayerManager.connect("player_added", self, "_on_player_added")
 	PlayerManager.connect("player_removed", self, "_on_player_removed")
+
 
 func _on_player_added(player_id)->void:
 	# create a new player instance, set player_id, and add to scene
