@@ -10,8 +10,8 @@ var _move_input: Vector2
 
 
 func _ready()->void:
-#	GGInput.create_player(player_id, load("res://test_profile.inputprofile"), [GGInput.DEVICE_KEYBOARD, GGInput.DEVICE_MOUSE])
-	GGInput.connect_input(player_id, "gameplay_move", self, "_on_gameplay_move")
+#	Gin.create_player(player_id, load("res://test_profile.inputprofile"), [Gin.DEVICE_KEYBOARD, Gin.DEVICE_MOUSE])
+	Gin.connect_input(player_id, "gameplay_move", self, "_on_gameplay_move")
 
 
 func _physics_process(delta:float)->void:

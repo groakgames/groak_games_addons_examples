@@ -15,24 +15,24 @@ _global_script_classes=[ {
 "path": "res://menus/input_manager_menu/device_select_menu.gd"
 }, {
 "base": "Resource",
-"class": "InputAction",
+"class": "GinAction",
 "language": "GDScript",
-"path": "res://addons/groak_games_addons/input_manager/inputs/input_action.gd"
+"path": "res://addons/groak_games_addons/gin_input_manager/inputs/gin_action.gd"
 }, {
-"base": "InputAction",
-"class": "InputActionScalar",
+"base": "Reference",
+"class": "GinActionScalar",
 "language": "GDScript",
-"path": "res://addons/groak_games_addons/input_manager/inputs/input_action_scalar.gd"
+"path": "res://addons/groak_games_addons/gin_input_manager/inputs/gin_action_scalar.gd"
 }, {
-"base": "InputAction",
-"class": "InputActionVector",
+"base": "GinAction",
+"class": "GinActionVector",
 "language": "GDScript",
-"path": "res://addons/groak_games_addons/input_manager/inputs/input_action_vector.gd"
+"path": "res://addons/groak_games_addons/gin_input_manager/inputs/gin_action_vector.gd"
 }, {
 "base": "Resource",
-"class": "InputProfile",
+"class": "GinProfile",
 "language": "GDScript",
-"path": "res://addons/groak_games_addons/input_manager/input_profile.gd"
+"path": "res://addons/groak_games_addons/gin_input_manager/input_profile.gd"
 }, {
 "base": "Reference",
 "class": "JsonInputProfileUtil",
@@ -56,10 +56,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "DeviceSelectDropDown": "",
-"InputAction": "",
-"InputActionScalar": "",
-"InputActionVector": "",
-"InputProfile": "",
+"GinAction": "",
+"GinActionScalar": "",
+"GinActionVector": "",
+"GinProfile": "",
 "JsonInputProfileUtil": "",
 "PlayerDeviceSelectDropDown": "",
 "ResourceFormatLoaderJSONInputProfile": "",
@@ -74,12 +74,12 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GGInput="*res://addons/groak_games_addons/input_manager/input.gd"
+Gin="*res://addons/groak_games_addons/gin_input_manager/gin.gd"
 PlayerManager="*res://player_manager.gd"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/groak_games_addons/input_manager/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/groak_games_addons/gin_input_manager/plugin.cfg" )
 
 [gui]
 

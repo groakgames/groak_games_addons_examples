@@ -9,14 +9,15 @@ signal player_removed(player_id)
 ## Adds a player into the player manager.
 ## Also registeres to the input manager.
 ## returns Error
-func add_player(player_id, profile:InputProfile, devices:PoolIntArray)->int:
+func add_player(player_id, profile:GinProfile, devices:PoolIntArray)->int:
 	if player_id in _players: return ERR_ALREADY_EXISTS
 	var data := PlayerData.new()
 	data.player_id = player_id
 	_players[player_id] = data
-	GGInput.create_player(player_id, profile, devices)
+	Gin.create_player(player_id, profile, devices)
 	emit_signal("player_added", player_id)
 	return OK
+
 
 func remove_player(player_id)->int:
 	var player_data: PlayerData = _players.get(player_id)

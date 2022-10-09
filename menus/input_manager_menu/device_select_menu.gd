@@ -12,14 +12,14 @@ func get_selected_device_ids()->PoolIntArray:
 func update_options()->void:
 	var popup_menu: PopupMenu = get_popup()
 	popup_menu.clear()
-	for id in GGInput.get_device_ids():
+	for id in Gin.get_device_ids():
 		var idx: int = popup_menu.get_item_count()
-		popup_menu.add_check_item(GGInput.get_device_name(id))
+		popup_menu.add_check_item(Gin.get_device_name(id))
 		popup_menu.set_item_metadata(idx, id) # set metadata as device id
 
 
 func _ready()->void:
-	GGInput.connect("device_connection_changed", self, "_on_device_connection_changed")
+	Gin.connect("device_connection_changed", self, "_on_device_connection_changed")
 	var popup := get_popup()
 	popup.connect("index_pressed", self, "_on_index_pressed")
 	popup.hide_on_checkable_item_selection = false

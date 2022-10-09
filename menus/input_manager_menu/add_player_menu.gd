@@ -28,9 +28,9 @@ func _on_add_player_pressed()->void:
 		_add_player_error_coroutine("Error: Player ID Already Exists!")
 		return
 
-	var profile: InputProfile
+	var profile: GinProfile
 	if not profile_path_line_edit.text.empty():
-		profile = load(profile_path_line_edit.text) as InputProfile
+		profile = load(profile_path_line_edit.text) as GinProfile
 		if not profile:
 			_add_player_error_coroutine("Error: Invalid or Malformed Input Profile!")
 			return
