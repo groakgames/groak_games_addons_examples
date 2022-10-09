@@ -4,40 +4,25 @@
 		{
 			"type": "vector",
 			"name": "cursor_move",
-			"left_inputs": {
-				"JoypadMotion": ["LX"]
-			},
-			"up_inputs": {
-				"JoypadMotion": ["LY"]
-			},
-			"right_inputs": {},
-			"down_inputs": {},
-			"native_inputs": [
-				"MouseMotion"
-			]
+			"left": { "JoypadMotion": ["LX"] },
+			"up": { "JoypadMotion": ["LY"] },
+			"right": {},
+			"down": {},
+			"native": ["MouseMotion"]
 		},
 		{
 			"type": "vector",
 			"name": "gameplay_move",
-			"left_inputs": {
+			"left": {
 				"Key": ["LEFT", "A"],
 				"JoypadButton": ["DPAD_LEFT"]
 			},
-			"up_inputs": [
-				{
-					"type": "Key",
-					"scancode": "UP"
-				},
-				{
-					"type": "Key",
-					"physical_scancode": "W"
-				},
-				{
-					"type": "JoypadButton",
-					"button_index": "DPAD_UP"
-				}
-			],
-			"right_inputs": [
+			"up": {
+				"Key": ["UP", "W"],
+				"JoypadButton": ["DPAD_UP"]
+			},
+			"right": [
+				// "Key": ["RIGHT"]
 				{
 					"type": "Key",
 					"scancode": "RIGHT"
@@ -51,7 +36,7 @@
 					"button_index": "DPAD_RIGHT"
 				}
 			],
-			"down_inputs": [
+			"down": [
 				{
 					"type": "Key",
 					"scancode": "DOWN"

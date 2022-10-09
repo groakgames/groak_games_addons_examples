@@ -5,7 +5,7 @@ const ERROR_MESSAGE_DISPLAY_TIME: float = 2.0
 
 export(NodePath) onready var player_id_line_edit = get_node(player_id_line_edit) as LineEdit
 
-export(NodePath) onready var profile_path_line_edit = get_node(profile_path_line_edit) as LineEdit
+export(NodePath) onready var profile_path_selector = get_node(profile_path_selector)
 
 export(NodePath) onready var devices_menu = get_node(devices_menu)
 
@@ -23,16 +23,16 @@ func _on_add_player_pressed()->void:
 	if player_id.empty():
 		_add_player_error_coroutine("Error: No Player ID!")
 		return
-
-	if PlayerManager.get_player_data(player_id):
+	elif PlayerManager.get_player_data(player_id):
 		_add_player_error_coroutine("Error: Player ID Already Exists!")
 		return
 
 	var profile: GinProfile
-	if not profile_path_line_edit.text.empty():
-		profile = load(profile_path_line_edit.text) as GinProfile
+	var selected_file_path: String = profile_path_selector.get_selected_file_path()
+	if not selected_file_path.empty():
+		profile = load(selected_file_path) as GinProfile
 		if not profile:
-			_add_player_error_coroutine("Error: Invalid or Malformed Input Profile!")
+			_add_player_error_coroutine("Error: Invalid or Malformed Profile!")
 			return
 
 	PlayerManager.add_player(player_id, profile, devices_menu.get_selected_device_ids())
