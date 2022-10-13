@@ -1,0 +1,58 @@
+[gd_scene format=2]
+
+[node name="ScalarActionInputs" type="VBoxContainer"]
+anchor_right = 1.0
+
+[node name="InputMenu" type="HBoxContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 24.0
+
+[node name="InputTypeDropdown" type="OptionButton" parent="InputMenu"]
+margin_right = 52.0
+margin_bottom = 24.0
+text = "Key"
+items = [ "Key", null, false, 0, null, "Mouse Button", null, false, 1, null, "Joypad Button", null, false, 2, null, "Joypad Motion", null, false, 3, null, "Midi", null, false, 4, null ]
+selected = 0
+
+[node name="KeyInputMenu" type="HBoxContainer" parent="InputMenu"]
+visible = false
+margin_left = 56.0
+margin_right = 538.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Key" type="Button" parent="InputMenu/KeyInputMenu"]
+margin_right = 398.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="PhysicalCheckBox" type="CheckBox" parent="InputMenu/KeyInputMenu"]
+margin_left = 402.0
+margin_right = 482.0
+margin_bottom = 24.0
+text = "Physical"
+
+[node name="MouseButtonInputMenu" type="HBoxContainer" parent="InputMenu"]
+margin_left = 56.0
+margin_right = 1024.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="Key" type="Button" parent="InputMenu/MouseButtonInputMenu"]
+margin_right = 884.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+
+[node name="PhysicalCheckBox" type="CheckBox" parent="InputMenu/MouseButtonInputMenu"]
+margin_left = 888.0
+margin_right = 968.0
+margin_bottom = 24.0
+text = "Physical"
+
+[node name="AddInputButton" type="MenuButton" parent="."]
+margin_top = 28.0
+margin_right = 1024.0
+margin_bottom = 48.0
+text = "Add Input"
+flat = false
+items = [ "Key", null, 0, false, false, 0, 0, null, "", false, "Physical Key", null, 0, false, false, 1, 0, null, "", false, "Joy Button", null, 0, false, false, 2, 0, null, "", false, "Mouse Button", null, 0, false, false, 3, 0, null, "", false ]
