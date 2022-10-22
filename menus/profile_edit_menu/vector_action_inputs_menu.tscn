@@ -1,0 +1,131 @@
+[gd_scene format=2]
+
+[node name="VectorActionInputs" type="VBoxContainer"]
+margin_top = 80.0
+margin_right = 1010.0
+margin_bottom = 220.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 1010.0
+margin_bottom = 44.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_top = 3.0
+margin_right = 931.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Up"
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 935.0
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "Add Input"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+margin_top = 24.0
+margin_right = 1010.0
+margin_bottom = 44.0
+
+[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/ScrollContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+margin_top = 48.0
+margin_right = 1010.0
+margin_bottom = 92.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer2"]
+margin_right = 1010.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="VBoxContainer2/HBoxContainer"]
+margin_top = 3.0
+margin_right = 931.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Up"
+
+[node name="Button" type="Button" parent="VBoxContainer2/HBoxContainer"]
+margin_left = 935.0
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "Add Input"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer2"]
+margin_top = 24.0
+margin_right = 1010.0
+margin_bottom = 44.0
+
+[node name="Panel" type="Panel" parent="VBoxContainer2/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer2/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer2/MarginContainer/ScrollContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="."]
+margin_top = 96.0
+margin_right = 1010.0
+margin_bottom = 140.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer3"]
+margin_right = 1010.0
+margin_bottom = 20.0
+
+[node name="Label" type="Label" parent="VBoxContainer3/HBoxContainer"]
+margin_top = 3.0
+margin_right = 931.0
+margin_bottom = 17.0
+size_flags_horizontal = 3
+text = "Up"
+
+[node name="Button" type="Button" parent="VBoxContainer3/HBoxContainer"]
+margin_left = 935.0
+margin_right = 1010.0
+margin_bottom = 20.0
+text = "Add Input"
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer3"]
+margin_top = 24.0
+margin_right = 1010.0
+margin_bottom = 44.0
+
+[node name="Panel" type="Panel" parent="VBoxContainer3/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 0, 20 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer3/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer3/MarginContainer/ScrollContainer"]
+margin_right = 1010.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3

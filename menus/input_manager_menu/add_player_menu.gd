@@ -27,14 +27,24 @@ func _on_add_player_pressed()->void:
 		_add_player_error_coroutine("Error: Player ID Already Exists!")
 		return
 
-	var profile: GinProfile
 	var selected_file_path: String = profile_path_selector.get_selected_file_path()
+	var profile:GinProfile
 	if not selected_file_path.empty():
-		profile = load(selected_file_path) as GinProfile
-		if not profile:
-			_add_player_error_coroutine("Error: Invalid or Malformed Profile!")
-			return
-
+		if not ResourceLoader.exists(selected_file_path):
+			var cfg := ConfigFile.new()
+			if cfg.load(selected_file_path) == OK:
+				profile = GinProfile.new()
+				profile.from_configfile(cfg)
+			else:
+				_add_player_error_coroutine("Error: Invalid or Malformed Profile!")
+				return
+		else:
+			var profile_res: Resource = load(selected_file_path)
+			if profile_res is GinProfile:
+				profile = profile_res
+			else:
+				_add_player_error_coroutine("Error: Resource is not Gin Profile!")
+				return
 	PlayerManager.add_player(player_id, profile, devices_menu.get_selected_device_ids())
 
 
