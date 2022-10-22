@@ -1,107 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/2d/example_player_instance.tscn" type="PackedScene" id=1]
 [ext_resource path="res://menus/input_manager_menu/input_manager_menu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/2d/2d_demo_scene.gd" type="Script" id=4]
-
-[sub_resource type="GDScript" id=1]
-script/source = "extends Node
-
-func _ready():
-	var cf := ConfigFile.new()
-
-	var ie := InputEventKey.new()
-	ie.shift = true
-	ie.alt = true
-	ie.scancode = KEY_W
-	var st := OS.get_scancode_string(ie.get_scancode_with_modifiers())
-	var st2 := \"\"
-#	for i in st.split(\"+\"):
-#		print(OS.find_scancode_from_string(i))
-
-	cf.set_value(\"actions\", \"name\", \"cool profile\")
-
-	cf.set_value(\"actions.gameplay_move\",       \"type\",         \"vector\")
-	cf.set_value(\"actions.gameplay_move.up\",    \"key\",          [KEY_UP])
-	cf.set_value(\"actions.gameplay_move.up\",    \"key_physical\", [KEY_W])
-	cf.set_value(\"actions.gameplay_move.down\",  \"key\",          [KEY_DOWN])
-	cf.set_value(\"actions.gameplay_move.down\",  \"key_physical\", [KEY_S])
-	cf.set_value(\"actions.gameplay_move.left\",  \"key\",          [KEY_LEFT])
-	cf.set_value(\"actions.gameplay_move.left\",  \"key_physical\", [KEY_A])
-	cf.set_value(\"actions.gameplay_move.right\", \"key\",          [KEY_RIGHT])
-	cf.set_value(\"actions.gameplay_move.right\", \"key_physical\", [KEY_D])
-
-	cf.set_value(\"actions.jump\", \"type\", \"scalar\")
-
-	cf.set_value(\"actions.jump\", \"type\", \"scalar\")
-	cf.set_value(\"actions.jump\", \"key_physical\", KEY_SPACE)
-
-#	cf.set_value(\"actions.gameplay_move\", \"down\",   [])
-#	cf.set_value(\"actions.gameplay_move\", \"left\",   [])
-#	cf.set_value(\"actions.gameplay_move\", \"right\",  [])
-#	cf.set_value(\"actions.gameplay_move\", \"native\", [])
-
-#	cf.set_value(profile.resource_name, \"test\", inst2dict(profile))
-	cf.save(\"res://test.cfg\")
-
-
-#
-#	var profile: GinProfile = GinProfile.new()
-#
-#	var iek := InputEventKey.new()
-#	var iejm := InputEventJoypadMotion.new()
-#	var iemm := InputEventMouseMotion.new()
-#
-#	var gameplay_move = GinActionVector.new()
-#	gameplay_move.resource_name = \"gameplay_move\"
-#	# Forward
-#	iek.scancode = KEY_W
-#	gameplay_move.add_input_event(iek, GinActionVector.TYPE_FORWARD)
-#
-#	# Back
-#	iek.scancode = KEY_S
-#	iejm.axis = JOY_ANALOG_LY
-#	gameplay_move.add_input_event(iek, GinActionVector.TYPE_BACK)
-#	gameplay_move.add_input_event(iejm, GinActionVector.TYPE_BACK)
-#	print(Gin.input_int_to_dict(gameplay_move.back_inputs[0]))
-#
-#	# Left
-#	iek.scancode = KEY_A
-#	gameplay_move.add_input_event(iek, GinActionVector.TYPE_LEFT)
-#
-#	# Right
-#	iek.scancode = KEY_D
-#	iejm.axis = JOY_ANALOG_LX
-#	gameplay_move.add_input_event(iek, GinActionVector.TYPE_RIGHT)
-#	gameplay_move.add_input_event(iejm, GinActionVector.TYPE_RIGHT)
-#
-#	# Native
-#	gameplay_move.add_input_event(iemm, GinActionVector.TYPE_NATIVE)
-#
-#	ResourceSaver.save(\"res://ignore/gameplay_move.tres\", gameplay_move)
-#
-#	profile.actions.append(gameplay_move)
-#
-#	ResourceSaver.save(\"res://ignore/1test_profile.tres\", profile)
-#
-#
-#	profile.to_configfile().save(\"res://ignore/2profile.ini\")
-#
-#	var cfg = ConfigFile.new()
-#	cfg.load(\"res://ignore/2profile.ini\")
-#	var profile2 := GinProfile.new()
-#	profile2.from_configfile(cfg)
-#	ResourceSaver.save(\"res://ignore/3test_profile.tres\", profile2)
-#	profile2.to_configfile().save(\"res://ignore/4profile.ini\")
-
-
-
-#func _input(event:InputEvent)->void:
-#	if event is InputEventKey and not event.is_echo():
-#		var i:int = Gin.input_event_int(event)
-#
-#		printt(Gin.input_int_to_dict(i), bool(i & Gin.MASK_MOD_ALL_BUT_FORCE))
-"
 
 [node name="Node2D" type="Control"]
 anchor_right = 1.0
@@ -119,6 +20,3 @@ anchor_left = 0.75
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
-
-[node name="Node" type="Node" parent="."]
-script = SubResource( 1 )

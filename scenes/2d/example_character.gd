@@ -19,14 +19,11 @@ func _physics_process(delta:float)->void:
 
 func _on_gameplay_move_(input:Vector2, event:InputEvent, is_absoulute:bool)->void:
 	if is_absoulute:
-		print(input)
 		position = input
 	else:
 		translate(input)
 
 func _on_gameplay_move(input:Vector2, event:InputEvent, is_absoulute:bool)->void:
-	if is_absoulute:
-		print(input)
-	else:
+	if not is_absoulute:
 		_move_input = input
 
