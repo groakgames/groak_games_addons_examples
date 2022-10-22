@@ -55,13 +55,14 @@ func _ready()->void:
 
 func _on_load_profile_pressed()->void:
 	profile_drop_down.select_latest_load = true
-	var err: int = Gin.load_profile_path(profile_path_selector.get_selected_file_path())
-	profile_drop_down.select_latest_load = false
-	match err:
-		ERR_ALREADY_EXISTS:
+	var profile: GinProfile = load(profile_path_selector.get_selected_file_path())
+	if profile:
+		var err: int = Gin.load_profile(profile)
+		profile_drop_down.select_latest_load = false
+		if err == ERR_ALREADY_EXISTS:
 			_error_coroutine(\"Error: Profile With Same Name Already Exists!\")
-		ERR_FILE_UNRECOGNIZED:
-			_error_coroutine(\"Error: Invalid or Malformed Profile!\")
+	else:
+		_error_coroutine(\"Error: Invalid or Malformed Profile!\")
 
 
 func _on_profile_selected(idx:int)->void:

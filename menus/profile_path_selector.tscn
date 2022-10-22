@@ -31,8 +31,8 @@ rect_min_size = Vector2( 170, 59.5 )
 window_title = "Open a File"
 resizable = true
 mode = 0
-access = 1
-filters = PoolStringArray( "*.inputprofile", "*.json", "*.tres", "*.res" )
+access = 2
+filters = PoolStringArray( "*.cfg", "*.ini", "*.gin", "*.tres", "*.res" )
 
 [connection signal="pressed" from="LoadFileDialogButton" to="." method="_on_load_file_button_pressed"]
 [connection signal="file_selected" from="LoadFileDialogButton/LoadProfileFileDialog" to="." method="_on_file_selected"]

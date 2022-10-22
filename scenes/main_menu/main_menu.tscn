@@ -7,14 +7,29 @@
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node
 
-func _ready():
-	var a := InputEventKey.new()
 
-	pass
+
+func _ready():
+	var start: int = OS.get_ticks_msec()
+#	for i in 10000:
+#		for j in 10000:
+#			var q: int = 0
+#			q = 1
+#	print(OS.get_ticks_msec()-start)
+#	start = OS.get_ticks_msec()
+#	var p: int = 0
+#	for i in 10000:
+#		for j in 10000:
+#			p = 1
+#	print(OS.get_ticks_msec()-start)
 
 func _input(ie:InputEvent):
-	if ie is InputEventKey:
-		printt(ie.scancode, ie.physical_scancode, ie.unicode)
+#	if ie is InputEventKey:
+#		printt(ie.scancode, ie.physical_scancode, ie.unicode)
+	pass
+
+#4172
+#4391
 "
 
 [node name="Control" type="CenterContainer"]

@@ -14,9 +14,10 @@ func add_player(player_id, profile:GinProfile, devices:PoolIntArray)->int:
 	var data := PlayerData.new()
 	data.player_id = player_id
 	_players[player_id] = data
-	Gin.create_player(player_id, profile, devices)
-	emit_signal("player_added", player_id)
-	return OK
+	if Gin.create_player(player_id, devices, profile):
+		emit_signal("player_added", player_id)
+		return OK
+	return ERR_CANT_CREATE
 
 
 func remove_player(player_id)->int:
