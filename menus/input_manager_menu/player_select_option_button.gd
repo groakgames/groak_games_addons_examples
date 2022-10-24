@@ -19,8 +19,8 @@ func update_after_remove(player_id)->void:
 			return
 
 func _ready()->void:
-	PlayerManager.connect("player_added", self, "_on_players_modified")
-	PlayerManager.connect("player_removed", self, "_on_players_modified")
+	PlayerManager.player_added.connect(_on_players_modified)
+	PlayerManager.player_removed.connect(_on_players_modified)
 	update_players()
 
 func _on_players_modified(_id)->void:

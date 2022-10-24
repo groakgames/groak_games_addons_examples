@@ -1,9 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://djmytvujmvna1"]
 
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="BoxMesh" id="3"]
 
-[node name="Spatial" type="Spatial"]
+[node name="Spatial" type="Node3D"]
 
-[node name="Ground" type="MeshInstance" parent="."]
-transform = Transform( 6.04967, 0, 0, 0, 1, 0, 0, 0, 4.36835, 0, -1, 0 )
-mesh = SubResource( 3 )
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(6.04967, 0, 0, 0, 1, 0, 0, 0, 4.36835, 0, -1, 0)
+mesh = SubResource("3")

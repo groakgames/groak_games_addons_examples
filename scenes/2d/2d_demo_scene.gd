@@ -2,20 +2,20 @@ extends Control
 
 
 ## Packed scene for instancing player
-export var player_instance_scene: PackedScene
+@export var player_instance_scene: PackedScene
 
 ## Maps player ids to node instances
 var _player_instances: Dictionary = {}
 
 
 func _ready()->void:
-	PlayerManager.connect("player_added", self, "_on_player_added")
-	PlayerManager.connect("player_removed", self, "_on_player_removed")
+	PlayerManager.player_added.connect(_on_player_added)
+	PlayerManager.player_removed.connect(_on_player_removed)
 
 
 func _on_player_added(player_id)->void:
 	# create a new player instance, set player_id, and add to scene
-	var new_instance: Node = player_instance_scene.instance()
+	var new_instance: Node = player_instance_scene.instantiate()
 	new_instance.set("player_id", player_id)
 	_player_instances[player_id] = new_instance
 	add_child(new_instance)

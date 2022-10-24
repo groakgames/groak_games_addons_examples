@@ -10,8 +10,8 @@ var _move_input: Vector2
 
 
 func _ready()->void:
-	Gin.connect_input_unhandled(player_id, "gameplay_move", self, "_on_gameplay_move")
-	Gin.connect_input(player_id, "gameplay_move", self, "_on_gameplay_move_")
+	Gin.connect_input_unhandled(player_id, "gameplay_move", _on_gameplay_move)
+	Gin.connect_input(player_id, "gameplay_move", _on_gameplay_move_)
 
 func _physics_process(delta:float)->void:
 	translate(delta * SPEED * _move_input)

@@ -1,7 +1,7 @@
 class_name DeviceSelectDropDown extends MenuButton
 
-func get_selected_device_ids()->PoolIntArray:
-	var rv := PoolIntArray()
+func get_selected_device_ids()->PackedInt32Array:
+	var rv := PackedInt32Array()
 	var popup_menu := get_popup()
 	for i in popup_menu.get_item_count():
 		if popup_menu.is_item_checked(i):
@@ -19,9 +19,9 @@ func update_options()->void:
 
 
 func _ready()->void:
-	Gin.connect("device_connection_changed", self, "_on_device_connection_changed")
+	Gin.device_connection_changed.connect(_on_device_connection_changed)
 	var popup := get_popup()
-	popup.connect("index_pressed", self, "_on_index_pressed")
+	popup.index_pressed.connect(_on_index_pressed)
 	popup.hide_on_checkable_item_selection = false
 	update_options()
 

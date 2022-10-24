@@ -9,7 +9,7 @@ signal player_removed(player_id)
 ## Adds a player into the player manager.
 ## Also registeres to the input manager.
 ## returns Error
-func add_player(player_id, profile:GinProfile, devices:PoolIntArray)->int:
+func add_player(player_id, profile:GinProfile, devices:PackedInt32Array)->int:
 	if player_id in _players: return ERR_ALREADY_EXISTS
 	var data := PlayerData.new()
 	data.player_id = player_id

@@ -5,16 +5,16 @@ var _current_player_id
 
 func set_current_player(player_id)->void:
 	_current_player_id = player_id
-	.update_options()
+	super.update_options()
 	var popup_menu: PopupMenu = get_popup()
-	var devices := Gin.get_player_devices(player_id)
+	var devices: PackedInt32Array = Gin.get_player_devices(player_id)
 	for i in popup_menu.get_item_count():
 		if popup_menu.get_item_metadata(i) in devices:
 			popup_menu.set_item_checked(i, true)
 
 
 func _on_index_pressed(idx:int)->void:
-	._on_index_pressed(idx)
+	super._on_index_pressed(idx)
 
 	var popup_menu := get_popup()
 

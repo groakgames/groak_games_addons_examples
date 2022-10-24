@@ -1,38 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://brhkds14sidm5"]
 
-[ext_resource path="res://menus/input_manager_menu/profile_selector.gd" type="Script" id=1]
-[ext_resource path="res://assets/folder_texture.res" type="Texture" id=2]
+[ext_resource type="Script" path="res://menus/input_manager_menu/profile_selector.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://boeg3qbffl0xo" path="res://assets/folder.svg" id="2_8m5gj"]
+[ext_resource type="Script" path="res://menus/window_resize.gd" id="3_jkrot"]
 
-[node name="ProfilePathSelector" type="HBoxContainer"]
+[node name="ProfilePathSelector" type="HBoxContainer" node_paths=PackedStringArray("load_file_dialog", "file_path_line_edit")]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
 load_file_dialog = NodePath("LoadFileDialogButton/LoadProfileFileDialog")
 file_path_line_edit = NodePath("ProfileFilePathLineEdit")
 
 [node name="ProfileFilePathLineEdit" type="LineEdit" parent="."]
-margin_right = 987.0
-margin_bottom = 600.0
+offset_right = 1121.0
+offset_bottom = 648.0
 size_flags_horizontal = 3
 
 [node name="LoadFileDialogButton" type="Button" parent="."]
-margin_left = 991.0
-margin_right = 1024.0
-margin_bottom = 600.0
+offset_left = 1125.0
+offset_right = 1152.0
+offset_bottom = 648.0
 grow_vertical = 2
-icon = ExtResource( 2 )
+icon = ExtResource("2_8m5gj")
 
 [node name="LoadProfileFileDialog" type="FileDialog" parent="LoadFileDialogButton"]
-anchor_left = 0.125
-anchor_top = 0.125
-anchor_right = 0.875
-anchor_bottom = 0.875
-rect_min_size = Vector2( 170, 59.5 )
-window_title = "Open a File"
-resizable = true
-mode = 0
+title = "Open a File"
+size = Vector2i(477, 162)
+ok_button_text = "Open"
+file_mode = 0
 access = 2
-filters = PoolStringArray( "*.cfg", "*.ini", "*.gin", "*.tres", "*.res" )
+filters = PackedStringArray("*.cfg", "*.ini", "*.gin", "*.tres", "*.res")
+script = ExtResource("3_jkrot")
 
 [connection signal="pressed" from="LoadFileDialogButton" to="." method="_on_load_file_button_pressed"]
 [connection signal="file_selected" from="LoadFileDialogButton/LoadProfileFileDialog" to="." method="_on_file_selected"]

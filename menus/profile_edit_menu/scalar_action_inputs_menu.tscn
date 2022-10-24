@@ -1,58 +1,67 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://bvfmya2ma2mqi"]
 
 [node name="ScalarActionInputs" type="VBoxContainer"]
+anchors_preset = 10
 anchor_right = 1.0
+grow_horizontal = 2
 
 [node name="InputMenu" type="HBoxContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 24.0
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 31.0
 
 [node name="InputTypeDropdown" type="OptionButton" parent="InputMenu"]
-margin_right = 52.0
-margin_bottom = 24.0
-text = "Key"
-items = [ "Key", null, false, 0, null, "Mouse Button", null, false, 1, null, "Joypad Button", null, false, 2, null, "Joypad Motion", null, false, 3, null, "Midi", null, false, 4, null ]
+layout_mode = 2
+offset_right = 72.0
+offset_bottom = 31.0
+item_count = 4
 selected = 0
+popup/item_0/text = "Key"
+popup/item_0/id = 0
+popup/item_1/text = ""
+popup/item_1/id = 1
+popup/item_2/text = ""
+popup/item_2/id = 2
+popup/item_3/text = ""
+popup/item_3/id = 3
 
 [node name="KeyInputMenu" type="HBoxContainer" parent="InputMenu"]
 visible = false
-margin_left = 56.0
-margin_right = 538.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="Key" type="Button" parent="InputMenu/KeyInputMenu"]
-margin_right = 398.0
-margin_bottom = 24.0
+layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="PhysicalCheckBox" type="CheckBox" parent="InputMenu/KeyInputMenu"]
-margin_left = 402.0
-margin_right = 482.0
-margin_bottom = 24.0
+layout_mode = 2
 text = "Physical"
 
 [node name="MouseButtonInputMenu" type="HBoxContainer" parent="InputMenu"]
-margin_left = 56.0
-margin_right = 1024.0
-margin_bottom = 24.0
+layout_mode = 2
+offset_left = 76.0
+offset_right = 1152.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
 
 [node name="Key" type="Button" parent="InputMenu/MouseButtonInputMenu"]
-margin_right = 884.0
-margin_bottom = 24.0
+layout_mode = 2
+offset_right = 981.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
 
 [node name="PhysicalCheckBox" type="CheckBox" parent="InputMenu/MouseButtonInputMenu"]
-margin_left = 888.0
-margin_right = 968.0
-margin_bottom = 24.0
+layout_mode = 2
+offset_left = 985.0
+offset_right = 1076.0
+offset_bottom = 31.0
 text = "Physical"
 
 [node name="AddInputButton" type="MenuButton" parent="."]
-margin_top = 28.0
-margin_right = 1024.0
-margin_bottom = 48.0
+layout_mode = 2
+offset_top = 35.0
+offset_right = 1152.0
+offset_bottom = 66.0
 text = "Add Input"
 flat = false
-items = [ "Key", null, 0, false, false, 0, 0, null, "", false, "Physical Key", null, 0, false, false, 1, 0, null, "", false, "Joy Button", null, 0, false, false, 2, 0, null, "", false, "Mouse Button", null, 0, false, false, 3, 0, null, "", false ]

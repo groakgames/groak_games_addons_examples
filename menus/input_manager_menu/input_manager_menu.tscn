@@ -1,334 +1,181 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=3 uid="uid://htrbn4vlw0xp"]
 
-[ext_resource path="res://menus/input_manager_menu/add_player_menu.gd" type="Script" id=1]
-[ext_resource path="res://menus/profile_path_selector.tscn" type="PackedScene" id=2]
-[ext_resource path="res://menus/input_manager_menu/device_select_menu.gd" type="Script" id=3]
-[ext_resource path="res://menus/input_manager_menu/player_select_option_button.gd" type="Script" id=5]
-[ext_resource path="res://menus/input_manager_menu/edit_player_menu.gd" type="Script" id=6]
-[ext_resource path="res://menus/input_manager_menu/player_device_select_menu.gd" type="Script" id=7]
+[ext_resource type="Script" path="res://menus/input_manager_menu/add_player_menu.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://brhkds14sidm5" path="res://menus/profile_path_selector.tscn" id="2"]
+[ext_resource type="Script" path="res://menus/input_manager_menu/device_select_menu.gd" id="3"]
+[ext_resource type="Script" path="res://menus/input_manager_menu/player_select_option_button.gd" id="5"]
+[ext_resource type="Script" path="res://menus/input_manager_menu/edit_player_menu.gd" id="6"]
+[ext_resource type="Script" path="res://menus/input_manager_menu/player_device_select_menu.gd" id="7"]
+[ext_resource type="Script" path="res://menus/input_manager_menu/manage_profile_menu.tres.gd" id="7_cqg34"]
+[ext_resource type="Script" path="res://menus/input_manager_menu/profile_dropdown.tres.gd" id="8_iws3b"]
 
-[sub_resource type="StyleBoxEmpty" id=1]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yinj1"]
 
-[sub_resource type="GDScript" id=2]
-resource_name = "manage_profile_menu.gd"
-script/source = "extends Node
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rn6j4"]
 
-const ERROR_MESSAGE_DISPLAY_TIME: float = 2.0
-
-export(NodePath) onready var profile_path_selector = get_node(profile_path_selector)
-export(NodePath) onready var load_profile_button = get_node(load_profile_button) as Button
-
-export(NodePath) onready var profile_drop_down = get_node(profile_drop_down)
-export(NodePath) onready var new_profile_button = get_node(new_profile_button) as Button
-
-export(NodePath) onready var edit_button = get_node(edit_button) as Button
-export(NodePath) onready var save_button = get_node(save_button) as Button
-export(NodePath) onready var unload_button = get_node(unload_button) as Button
-
-export(NodePath) onready var error_display = get_node(error_display) as Label
-
-export(NodePath) onready var save_profile_file_dialog = get_node(save_profile_file_dialog)
-
-func update_enabled_buttons()->void:
-	var dis: bool = profile_drop_down.get_selected_profile() == null
-	edit_button.disabled = dis
-	save_button.disabled = dis
-	unload_button.disabled = dis
-
-
-var _error_coroutine_timer: SceneTreeTimer
-
-
-func _ready()->void:
-	load_profile_button.connect(\"pressed\", self, \"_on_load_profile_pressed\")
-
-	edit_button.connect(\"pressed\", self, \"_on_edit_pressed\")
-	save_button.connect(\"pressed\", self, \"_on_save_pressed\")
-	unload_button.connect(\"pressed\", self, \"_on_unload_pressed\")
-
-	profile_drop_down.connect(\"item_selected\", self, \"_on_profile_selected\")
-	new_profile_button.connect(\"pressed\", self, \"_on_new_profile_pressed\")
-
-	save_profile_file_dialog.connect(\"file_selected\", self, \"_on_file_selected\")
-	update_enabled_buttons()
-
-
-func _on_load_profile_pressed()->void:
-	profile_drop_down.select_latest_load = true
-	var profile: GinProfile = load(profile_path_selector.get_selected_file_path())
-	if profile:
-		var err: int = Gin.load_profile(profile)
-		profile_drop_down.select_latest_load = false
-		if err == ERR_ALREADY_EXISTS:
-			_error_coroutine(\"Error: Profile With Same Name Already Exists!\")
-	else:
-		_error_coroutine(\"Error: Invalid or Malformed Profile!\")
-
-
-func _on_profile_selected(idx:int)->void:
-	update_enabled_buttons()
-
-
-func _on_new_profile_pressed()->void:
-	pass
-
-
-func _on_edit_pressed()->void:
-	# show edit profile menu
-	pass
-
-
-func _on_save_pressed()->void:
-	var profile: GinProfile = profile_drop_down.get_selected_profile()
-	if profile:
-		save_profile_file_dialog.show()
-
-
-func _on_file_selected(file_path:String)->void:
-	var profile: GinProfile = profile_drop_down.get_selected_profile()
-	if not profile:
-		_error_coroutine(\"Error: Failed to Save\")
-		return
-	ResourceSaver.save(file_path, profile)
-
-
-func _on_unload_pressed()->void:
-	var profile: GinProfile = profile_drop_down.get_selected_profile()
-	if profile:
-		Gin.unload_profile(profile.resource_name)
-
-
-func _error_coroutine(error_text:String)->void:
-	# Set text to display error
-	error_display.text = error_text
-	error_display.visible = true
-	# If there is an error being displayed already, set the timer to zero
-	if _error_coroutine_timer:
-		_error_coroutine_timer.time_left = 0
-	# Keep error text for atleast ERROR_MESSAGE_DISPLAY_TIME second
-	var timer := get_tree().create_timer(ERROR_MESSAGE_DISPLAY_TIME)
-	_error_coroutine_timer = timer
-	yield(_error_coroutine_timer, \"timeout\")
-	# Reset text if the error being displayed was the latest one.
-	if _error_coroutine_timer == timer:
-		_error_coroutine_timer = null
-		error_display.text = \"\"
-		error_display.visible = false
-"
-
-[sub_resource type="GDScript" id=3]
-resource_name = "profile_drop_down.gd"
-script/source = "extends OptionButton
-
-var select_latest_load := false
-
-
-func get_selected_profile()->GinProfile:
-	if selected >= 0:
-		return get_item_metadata(selected)
-	return null
-
-
-func update_profiles(select_profile=null)->void:
-	clear()
-	for profile in Gin.get_profiles():
-		var i := get_item_count()
-		add_item(profile.resource_name)
-		set_item_metadata(i, profile)
-		if profile == select_profile:
-			selected = i
-
-
-func _ready()->void:
-	connect(\"item_selected\", self, \"_on_item_selected\")
-	Gin.connect(\"profile_loaded\", self, \"_on_profile_loaded\")
-	Gin.connect(\"profile_unloaded\", self, \"_on_profile_unloaded\")
-	update_profiles()
-
-
-func _on_profile_loaded(profile:GinProfile)->void:
-	update_profiles(profile if select_latest_load else null)
-
-
-func _on_profile_unloaded(profile:GinProfile)->void:
-	for i in get_item_count():
-		if get_item_metadata(i) == profile:
-			remove_item(i)
-			return
-"
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_srv4s"]
 
 [node name="InputManagerMenu" type="ScrollContainer"]
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_lock_": true
-}
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/margin_right = 5
-custom_constants/margin_top = 5
-custom_constants/margin_left = 5
-custom_constants/margin_bottom = 5
-__meta__ = {
-"_edit_lock_": true
-}
+metadata/_edit_lock_ = true
 
 [node name="VBox" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 1019.0
-margin_bottom = 595.0
+offset_right = 1152.0
+offset_bottom = 648.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_constants/separation = 20
-__meta__ = {
-"_edit_lock_": true
-}
+metadata/_edit_lock_ = true
 
 [node name="CreatePlayerPanel" type="PanelContainer" parent="MarginContainer/VBox"]
-margin_right = 1014.0
-margin_bottom = 192.0
+offset_right = 1152.0
+offset_bottom = 246.0
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/CreatePlayerPanel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1007.0
-margin_bottom = 185.0
-script = ExtResource( 1 )
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/CreatePlayerPanel" node_paths=PackedStringArray("player_id_line_edit", "profile_path_selector", "devices_menu", "add_player_button")]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 1146.0
+offset_bottom = 240.0
+script = ExtResource("1")
 player_id_line_edit = NodePath("PlayerIDLineEdit")
 profile_path_selector = NodePath("ProfilePathSelector")
 devices_menu = NodePath("DeviceSelectDropDown")
 add_player_button = NodePath("AddPlayerButton")
 
 [node name="PlayerHeading" type="Label" parent="MarginContainer/VBox/CreatePlayerPanel/VBox"]
-margin_right = 1000.0
-margin_bottom = 14.0
+offset_right = 1140.0
+offset_bottom = 26.0
 text = "Create Player"
-align = 1
 
 [node name="NameIDHeading" type="Label" parent="MarginContainer/VBox/CreatePlayerPanel/VBox"]
-margin_top = 18.0
-margin_right = 1000.0
-margin_bottom = 32.0
+offset_top = 30.0
+offset_right = 1140.0
+offset_bottom = 56.0
 text = "Name / ID"
 
 [node name="PlayerIDLineEdit" type="LineEdit" parent="MarginContainer/VBox/CreatePlayerPanel/VBox"]
-margin_top = 36.0
-margin_right = 1000.0
-margin_bottom = 60.0
+offset_top = 60.0
+offset_right = 1140.0
+offset_bottom = 91.0
 
 [node name="ProfileHeading" type="Label" parent="MarginContainer/VBox/CreatePlayerPanel/VBox"]
-margin_top = 64.0
-margin_right = 1000.0
-margin_bottom = 78.0
+offset_top = 95.0
+offset_right = 1140.0
+offset_bottom = 121.0
 text = "Profile Path"
 
-[node name="ProfilePathSelector" parent="MarginContainer/VBox/CreatePlayerPanel/VBox" instance=ExtResource( 2 )]
+[node name="ProfilePathSelector" parent="MarginContainer/VBox/CreatePlayerPanel/VBox" instance=ExtResource("2")]
+anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 82.0
-margin_right = 1000.0
-margin_bottom = 106.0
+offset_top = 125.0
+offset_right = 1140.0
+offset_bottom = 156.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="DeviceSelectDropDown" type="MenuButton" parent="MarginContainer/VBox/CreatePlayerPanel/VBox"]
-margin_top = 110.0
-margin_right = 1000.0
-margin_bottom = 130.0
+offset_top = 160.0
+offset_right = 1140.0
+offset_bottom = 191.0
 focus_mode = 2
 text = "Claim Devices"
 flat = false
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="Separator" type="HSeparator" parent="MarginContainer/VBox/CreatePlayerPanel/VBox"]
-margin_top = 134.0
-margin_right = 1000.0
-margin_bottom = 154.0
-custom_constants/separation = 20
-custom_styles/separator = SubResource( 1 )
+offset_top = 195.0
+offset_right = 1140.0
+offset_bottom = 199.0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_yinj1")
 
 [node name="AddPlayerButton" type="Button" parent="MarginContainer/VBox/CreatePlayerPanel/VBox"]
-margin_top = 158.0
-margin_right = 1000.0
-margin_bottom = 178.0
+offset_top = 203.0
+offset_right = 1140.0
+offset_bottom = 234.0
 text = "Add Player"
 
 [node name="EditPlayerPanel" type="PanelContainer" parent="MarginContainer/VBox"]
-margin_top = 212.0
-margin_right = 1014.0
-margin_bottom = 336.0
+offset_top = 250.0
+offset_right = 1152.0
+offset_bottom = 390.0
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/EditPlayerPanel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1007.0
-margin_bottom = 117.0
-script = ExtResource( 6 )
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/EditPlayerPanel" node_paths=PackedStringArray("player_select_option_button", "device_select_drop_down", "edit_profile_button", "remove_player_button")]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 1146.0
+offset_bottom = 134.0
+script = ExtResource("6")
 player_select_option_button = NodePath("PlayerSelectOptionButton")
 device_select_drop_down = NodePath("DeviceSelectDropDown")
 edit_profile_button = NodePath("HBoxContainer/EditProfileButton")
 remove_player_button = NodePath("HBoxContainer/RemovePlayerButton")
 
 [node name="EditPlayerHeading" type="Label" parent="MarginContainer/VBox/EditPlayerPanel/VBox"]
-margin_right = 1000.0
-margin_bottom = 14.0
+offset_right = 1140.0
+offset_bottom = 26.0
 text = "Edit Player"
-align = 1
 
 [node name="PlayerSelectOptionButton" type="OptionButton" parent="MarginContainer/VBox/EditPlayerPanel/VBox"]
-margin_top = 18.0
-margin_right = 1000.0
-margin_bottom = 38.0
-script = ExtResource( 5 )
+offset_top = 30.0
+offset_right = 1140.0
+offset_bottom = 50.0
+script = ExtResource("5")
 
 [node name="DeviceSelectDropDown" type="MenuButton" parent="MarginContainer/VBox/EditPlayerPanel/VBox"]
-margin_top = 42.0
-margin_right = 1000.0
-margin_bottom = 62.0
+offset_top = 54.0
+offset_right = 1140.0
+offset_bottom = 85.0
 focus_mode = 2
 text = "Claimed Devices"
 flat = false
-script = ExtResource( 7 )
+script = ExtResource("7")
 
 [node name="Separator" type="HSeparator" parent="MarginContainer/VBox/EditPlayerPanel/VBox"]
-margin_top = 66.0
-margin_right = 1000.0
-margin_bottom = 86.0
-custom_constants/separation = 20
-custom_styles/separator = SubResource( 1 )
+offset_top = 89.0
+offset_right = 1140.0
+offset_bottom = 93.0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_rn6j4")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/EditPlayerPanel/VBox"]
-margin_top = 90.0
-margin_right = 1000.0
-margin_bottom = 110.0
+offset_top = 97.0
+offset_right = 1140.0
+offset_bottom = 128.0
 
 [node name="EditProfileButton" type="Button" parent="MarginContainer/VBox/EditPlayerPanel/VBox/HBoxContainer"]
-margin_right = 498.0
-margin_bottom = 20.0
+offset_right = 568.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Edit Profile"
 
 [node name="RemovePlayerButton" type="Button" parent="MarginContainer/VBox/EditPlayerPanel/VBox/HBoxContainer"]
-margin_left = 502.0
-margin_right = 1000.0
-margin_bottom = 20.0
+offset_left = 572.0
+offset_right = 1140.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Remove Player"
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBox"]
-margin_top = 356.0
-margin_right = 1014.0
-margin_bottom = 484.0
+offset_top = 394.0
+offset_right = 1152.0
+offset_bottom = 545.0
 
-[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1007.0
-margin_bottom = 121.0
-script = SubResource( 2 )
+[node name="VBox" type="VBoxContainer" parent="MarginContainer/VBox/PanelContainer" node_paths=PackedStringArray("profile_path_selector", "load_profile_button", "profile_drop_down", "new_profile_button", "edit_button", "save_button", "unload_button", "error_display", "save_profile_file_dialog")]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 1146.0
+offset_bottom = 145.0
+script = ExtResource("7_cqg34")
 profile_path_selector = NodePath("HBox/ProfilePathSelector")
 load_profile_button = NodePath("HBox/LoadProfileButton")
 profile_drop_down = NodePath("HBox2/ProfileDropDown")
@@ -340,88 +187,84 @@ error_display = NodePath("ErrorDisplay")
 save_profile_file_dialog = NodePath("HBoxContainer/SaveButton/SaveProfileFileDialog")
 
 [node name="Label" type="Label" parent="MarginContainer/VBox/PanelContainer/VBox"]
-margin_right = 1000.0
-margin_bottom = 14.0
+offset_right = 1140.0
+offset_bottom = 26.0
 text = "Manage Profile"
-align = 1
 
 [node name="HBox" type="HBoxContainer" parent="MarginContainer/VBox/PanelContainer/VBox"]
-margin_top = 18.0
-margin_right = 1000.0
-margin_bottom = 42.0
+offset_top = 30.0
+offset_right = 1140.0
+offset_bottom = 61.0
 
-[node name="ProfilePathSelector" parent="MarginContainer/VBox/PanelContainer/VBox/HBox" instance=ExtResource( 2 )]
+[node name="ProfilePathSelector" parent="MarginContainer/VBox/PanelContainer/VBox/HBox" instance=ExtResource("2")]
+anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_right = 909.0
-margin_bottom = 24.0
+offset_right = 1035.0
+offset_bottom = 31.0
+grow_horizontal = 1
+grow_vertical = 1
 size_flags_horizontal = 3
 
 [node name="LoadProfileButton" type="Button" parent="MarginContainer/VBox/PanelContainer/VBox/HBox"]
-margin_left = 913.0
-margin_right = 1000.0
-margin_bottom = 24.0
+offset_left = 1039.0
+offset_right = 1140.0
+offset_bottom = 31.0
 text = "Load Profile"
 
 [node name="HBox2" type="HBoxContainer" parent="MarginContainer/VBox/PanelContainer/VBox"]
-margin_top = 46.0
-margin_right = 1000.0
-margin_bottom = 66.0
+offset_top = 65.0
+offset_right = 1140.0
+offset_bottom = 96.0
 
 [node name="ProfileDropDown" type="OptionButton" parent="MarginContainer/VBox/PanelContainer/VBox/HBox2"]
-margin_right = 911.0
-margin_bottom = 20.0
+offset_right = 1038.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
-script = SubResource( 3 )
+script = ExtResource("8_iws3b")
 
 [node name="NewProfileButton" type="Button" parent="MarginContainer/VBox/PanelContainer/VBox/HBox2"]
-margin_left = 915.0
-margin_right = 1000.0
-margin_bottom = 20.0
+offset_left = 1042.0
+offset_right = 1140.0
+offset_bottom = 31.0
 text = "New Profile"
 
 [node name="Separator" type="HSeparator" parent="MarginContainer/VBox/PanelContainer/VBox"]
-margin_top = 70.0
-margin_right = 1000.0
-margin_bottom = 90.0
-custom_constants/separation = 20
-custom_styles/separator = SubResource( 1 )
+offset_top = 100.0
+offset_right = 1140.0
+offset_bottom = 104.0
+theme_override_styles/separator = SubResource("StyleBoxEmpty_srv4s")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBox/PanelContainer/VBox"]
-margin_top = 94.0
-margin_right = 1000.0
-margin_bottom = 114.0
+offset_top = 108.0
+offset_right = 1140.0
+offset_bottom = 139.0
 alignment = 1
 
 [node name="EditButton" type="Button" parent="MarginContainer/VBox/PanelContainer/VBox/HBoxContainer"]
-margin_right = 330.0
-margin_bottom = 20.0
+offset_right = 377.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Edit Profile"
 
 [node name="SaveButton" type="Button" parent="MarginContainer/VBox/PanelContainer/VBox/HBoxContainer"]
-margin_left = 334.0
-margin_right = 665.0
-margin_bottom = 20.0
+offset_left = 381.0
+offset_right = 758.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Save Profile"
 
 [node name="SaveProfileFileDialog" type="FileDialog" parent="MarginContainer/VBox/PanelContainer/VBox/HBoxContainer/SaveButton"]
-margin_right = 315.0
-margin_bottom = 130.0
-rect_min_size = Vector2( 170, 59.5 )
 
 [node name="UnloadButton" type="Button" parent="MarginContainer/VBox/PanelContainer/VBox/HBoxContainer"]
-margin_left = 669.0
-margin_right = 1000.0
-margin_bottom = 20.0
+offset_left = 762.0
+offset_right = 1140.0
+offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Unload"
 
 [node name="ErrorDisplay" type="Label" parent="MarginContainer/VBox/PanelContainer/VBox"]
 visible = false
-margin_top = 118.0
-margin_right = 1000.0
-margin_bottom = 132.0
-align = 1
-autowrap = true
+offset_top = 143.0
+offset_right = 1140.0
+offset_bottom = 166.0

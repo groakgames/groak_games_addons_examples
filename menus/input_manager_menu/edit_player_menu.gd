@@ -1,13 +1,10 @@
 extends Node
 
 
-export(NodePath) onready var player_select_option_button = get_node(player_select_option_button)
-
-export(NodePath) onready var device_select_drop_down = get_node(device_select_drop_down)
-
-export(NodePath) onready var edit_profile_button = get_node(edit_profile_button)
-
-export(NodePath) onready var remove_player_button = get_node(remove_player_button)
+@export var player_select_option_button: Button
+@export var device_select_drop_down: Button
+@export var edit_profile_button: Button
+@export var remove_player_button: Button
 
 
 func update_enabled_buttons()->void:
@@ -19,9 +16,9 @@ func update_enabled_buttons()->void:
 
 
 func _ready()->void:
-	player_select_option_button.connect("item_selected", self, "_on_player_select")
-	PlayerManager.connect("player_removed", self, "_on_player_removed")
-	PlayerManager.connect("player_added", self, "_on_player_added", [], CONNECT_DEFERRED)
+	player_select_option_button.item_selected.connect(_on_player_select)
+	PlayerManager.player_removed.connect(_on_player_removed)
+	PlayerManager.player_added.connect(_on_player_added, CONNECT_DEFERRED)
 	update_enabled_buttons()
 
 
@@ -34,7 +31,6 @@ func _on_player_added(_id)->void:
 	update_enabled_buttons()
 	device_select_drop_down.set_current_player(player_select_option_button.get_selected_player_id())
 
-#	if player_id ==
 
 func _on_player_select(idx:int)->void:
 	update_enabled_buttons()
